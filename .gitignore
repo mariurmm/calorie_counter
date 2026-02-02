@@ -43,3 +43,42 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Flutter/Dart
+.dart_tool/
+.packages
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.melos_tool/
+.idea/
+android/.gradle/
+android/local.properties
+
+# iOS/macOS
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Pods/
+ios/.symlinks/
+ios/Runner.xcworkspace/
+ios/DerivedData/
+ios/.flutter-plugins
+ios/.flutter-plugins-dependencies
+macos/Flutter/Flutter.framework
+macos/Flutter/Flutter.podspec
+macos/Pods/
+macos/.symlinks/
+macos/xcuserdata/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Others
+*.iml
+*.log
+*.lock
+*.tmp
+*.swp
+*.DS_Store
