@@ -1,14 +1,31 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../models/meal.dart';
 import '../bloc/calorie_bloc.dart';
-import '../bloc/calorie_event.dart';
-import '../bloc/calorie_state.dart';
+import 'widgets/add_meal_dialog.dart';
 import 'widgets/meal_grid.dart';
 
 class CalorieScreen extends StatelessWidget {
   const CalorieScreen({super.key});
+
+  Future<void> _addMeal(BuildContext context) async {
+    final file = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (file == null) return;
+    
+    if (!context.mounted) return;
+    
+    final path = await showDialog<String>(
+      context: context,
+      builder: (c) => AddMealDialog(imagePath: file.path),
+    );
+    
+    if (path != null && context.mounted) {
+      context.read<CalorieBloc>().add(AddMealEvent(path));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,16 +73,7 @@ class CalorieScreen extends StatelessWidget {
               ),
 
               ElevatedButton.icon(
-                onPressed: () {
-                  context.read<CalorieBloc>().add(
-                    AddMeal(
-                      Meal(
-                        url: null, // пока заглушка
-                        calories: 100,
-                      ),
-                    ),
-                  );
-                },
+                onPressed: () => _addMeal(context),
                 icon: const Icon(Icons.add),
                 label: const Text("Добавить"),
                 style: ElevatedButton.styleFrom(

@@ -1,11 +1,5 @@
-import 'app_image.dart';
-
 class Meal {
-  final AppImageModel? image; 
+  final String? imagePath;
   final int calories;
-
-  Meal({
-    this.image,
-    required this.calories,
-  });
+  const Meal({this.imagePath, required this.calories});
 }
