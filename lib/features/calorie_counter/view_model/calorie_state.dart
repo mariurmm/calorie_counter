@@ -8,3 +8,7 @@ abstract class CalorieState {
 class CalorieInitial extends CalorieState {
   const CalorieInitial() : super(const []);
 }
+
+class CalorieLoaded extends CalorieState {
+  const CalorieLoaded(List<Meal> meals) : super(meals);
+}

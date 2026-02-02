@@ -8,13 +8,13 @@ class CalorieBloc extends Bloc<CalorieEvent, CalorieState> {
   CalorieBloc() : super(const CalorieInitial()) {
     on<AddMeal>((event, emit) {
       final updatedMeals = List<Meal>.from(state.meals)..add(event.meal);
-      emit(CalorieInitial()..meals);
+      emit(CalorieLoaded(updatedMeals));
     });
 
     on<RemoveMeal>((event, emit) {
       final updatedMeals =
           state.meals.where((m) => m != event.meal).toList();
-      emit(CalorieInitial()..meals);
+      emit(CalorieLoaded(updatedMeals));
     });
   }
 }
