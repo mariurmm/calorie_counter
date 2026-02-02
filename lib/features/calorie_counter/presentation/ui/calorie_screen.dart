@@ -1,93 +1,102 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../models/meal.dart';
 import '../bloc/calorie_bloc.dart';
 import 'widgets/add_meal_dialog.dart';
 import 'widgets/meal_grid.dart';
 
-class CalorieScreen extends StatelessWidget {
+class CalorieScreen extends StatefulWidget {
   const CalorieScreen({super.key});
 
+  @override
+  State<CalorieScreen> createState() => _CalorieScreenState();
+}
+
+class _CalorieScreenState extends State<CalorieScreen> {
+  bool _isPickingImage = false;
+
   Future<void> _addMeal(BuildContext context) async {
-    final file = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (file == null) return;
+    if (_isPickingImage) return;
     
-    if (!context.mounted) return;
-    
-    final path = await showDialog<String>(
-      context: context,
-      builder: (c) => AddMealDialog(imagePath: file.path),
-    );
-    
-    if (path != null && context.mounted) {
-      context.read<CalorieBloc>().add(AddMealEvent(path));
+    _isPickingImage = true;
+    try {
+      final file = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (file == null) return;
+      
+      if (!context.mounted) return;
+      
+      final path = await showDialog<String>(
+        context: context,
+        builder: (c) => AddMealDialog(imagePath: file.path),
+      );
+      
+      if (path != null && context.mounted) {
+        context.read<CalorieBloc>().add(AddMealEvent(path));
+      }
+    } finally {
+      _isPickingImage = false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => CalorieBloc(),
-      child: Scaffold(
-        appBar: AppBar(title: const Text("Счётчик калорий"), centerTitle: true),
+    return Scaffold(
+      appBar: AppBar(title: const Text("Счётчик калорий"), centerTitle: true),
 
-        body: const SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: MealGrid(),
-          ),
+      body: const SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: MealGrid(),
         ),
+      ),
 
-        bottomNavigationBar: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          color: Colors.grey.shade100,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    "Общее количество калорий:",
-                    style: TextStyle(fontSize: 14),
-                  ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        color: Colors.grey.shade100,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  "Общее количество калорий:",
+                  style: TextStyle(fontSize: 14),
+                ),
 
-                  BlocBuilder<CalorieBloc, CalorieState>(
-                    builder: (context, state) {
-                      final totalCalories = state.meals.fold(
-                        0,
-                        (sum, meal) => sum + meal.calories,
-                      );
+                BlocBuilder<CalorieBloc, CalorieState>(
+                  builder: (context, state) {
+                    final totalCalories = state.meals.fold(
+                      0,
+                      (sum, meal) => sum + meal.calories,
+                    );
 
-                      return Text(
-                        "$totalCalories",
-                        style: Theme.of(context).textTheme.titleLarge,
-                      );
-                    },
-                  ),
-                ],
-              ),
+                    return Text(
+                      "$totalCalories",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    );
+                  },
+                ),
+              ],
+            ),
 
-              ElevatedButton.icon(
-                onPressed: () => _addMeal(context),
-                icon: const Icon(Icons.add),
-                label: const Text("Добавить"),
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 12,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+            ElevatedButton.icon(
+              onPressed: () => _addMeal(context),
+              icon: const Icon(Icons.add),
+              label: const Text("Добавить"),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
