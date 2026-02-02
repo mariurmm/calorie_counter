@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../view_model/calorie_bloc.dart';
 import '../../view_model/calorie_state.dart';
 import 'meal_card.dart';
 
+  
 class MealGrid extends StatelessWidget {
   const MealGrid({super.key});
 
@@ -22,10 +24,7 @@ class MealGrid extends StatelessWidget {
           itemBuilder: (context, index) {
             final meal = state.meals[index];
 
-            return MealCard(
-              imagePath: meal.imagePath,
-              calories: meal.calories,
-            );
+            return MealCard(imagePath: meal.imagePath, calories: meal.calories);
           },
         );
       },

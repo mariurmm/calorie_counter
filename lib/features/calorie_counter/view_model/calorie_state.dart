@@ -1,11 +1,10 @@
-import 'package:calorie_counter/features/calorie_counter/models/meal.dart';
+import '../models/meal.dart';
 
-class CalorieState {
+abstract class CalorieState {
   final List<Meal> meals;
+  const CalorieState(this.meals);
+}
 
-  CalorieState({required this.meals});
-
-  factory CalorieState.initial() {
-    return CalorieState(meals: []);
-  }
+class CalorieInitial extends CalorieState {
+  const CalorieInitial() : super(const []);
 }

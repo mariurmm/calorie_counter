@@ -1,15 +1,20 @@
-import 'package:calorie_counter/features/calorie_counter/models/meal.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-abstract class CalorieEvent {}
+import '../models/meal.dart';
+import 'calorie_event.dart';
+import 'calorie_state.dart';
 
-class AddMeal extends CalorieEvent {
-  final Meal meal;
+class CalorieBloc extends Bloc<CalorieEvent, CalorieState> {
+  CalorieBloc() : super(const CalorieInitial()) {
+    on<AddMeal>((event, emit) {
+      final updatedMeals = List<Meal>.from(state.meals)..add(event.meal);
+      emit(CalorieInitial()..meals);
+    });
 
-  AddMeal(this.meal);
-}
-
-class RemoveMeal extends CalorieEvent {
-  final Meal meal;
-
-  RemoveMeal(this.meal);
+    on<RemoveMeal>((event, emit) {
+      final updatedMeals =
+          state.meals.where((m) => m != event.meal).toList();
+      emit(CalorieInitial()..meals);
+    });
+  }
 }

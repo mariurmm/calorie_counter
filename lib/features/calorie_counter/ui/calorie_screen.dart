@@ -15,10 +15,7 @@ class CalorieScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => CalorieBloc(),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Счётчик калорий"),
-          centerTitle: true,
-        ),
+        appBar: AppBar(title: const Text("Счётчик калорий"), centerTitle: true),
 
         body: const SafeArea(
           child: Padding(
@@ -61,19 +58,21 @@ class CalorieScreen extends StatelessWidget {
               ElevatedButton.icon(
                 onPressed: () {
                   context.read<CalorieBloc>().add(
-                        AddMeal(
-                          Meal(
-                            imagePath: null, // пока заглушка
-                            calories: 100,
-                          ),
-                        ),
-                      );
+                    AddMeal(
+                      Meal(
+                        imagePath: null, // пока заглушка
+                        calories: 100,
+                      ),
+                    ),
+                  );
                 },
                 icon: const Icon(Icons.add),
                 label: const Text("Добавить"),
                 style: ElevatedButton.styleFrom(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
