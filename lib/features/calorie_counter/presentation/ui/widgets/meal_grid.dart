@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../view_model/calorie_bloc.dart';
-import '../../view_model/calorie_state.dart';
+import '../../bloc/calorie_bloc.dart';
+import '../../bloc/calorie_event.dart';
+import '../../bloc/calorie_state.dart';
 import 'meal_card.dart';
 
   
@@ -25,7 +26,7 @@ class MealGrid extends StatelessWidget {
             final meal = state.meals[index];
 
             return MealCard(
-              imagePath: meal.imagePath,
+              imagePath: meal.image?.url ?? 'assets/placeholder.png',
               calories: meal.calories,
               onTap: () => context.read<CalorieBloc>().add(RemoveMeal(meal)),
             );

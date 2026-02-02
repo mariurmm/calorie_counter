@@ -60,9 +60,7 @@ class CalorieScreen extends StatelessWidget {
                   context.read<CalorieBloc>().add(
                     AddMeal(
                       Meal(
-                        imagePath: null, // пока заглушка
                         calories: 100,
-                        imagePath: 'assets/placeholder.png',
                       ),
                     ),
                   );

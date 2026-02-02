@@ -10,5 +10,5 @@ class CalorieInitial extends CalorieState {
 }
 
 class CalorieLoaded extends CalorieState {
-  const CalorieLoaded(List<Meal> meals) : super(meals);
+  const CalorieLoaded(super.meals);
 }
