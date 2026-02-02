@@ -1,4 +1,4 @@
-import '../models/meal.dart';
+import '../../models/meal.dart';
 
 abstract class CalorieState {
   final List<Meal> meals;

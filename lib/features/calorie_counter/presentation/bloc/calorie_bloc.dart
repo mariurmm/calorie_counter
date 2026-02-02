@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/meal.dart';
+import '../../models/meal.dart';
 import 'calorie_event.dart';
 import 'calorie_state.dart';
 
