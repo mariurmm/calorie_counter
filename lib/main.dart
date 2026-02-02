@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'features/calorie_counter/view/calorie_screen.dart';
+import 'features/calorie_counter/ui/calorie_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const CalorieScreen(), // ← вот здесь твой экран
+      home: const CalorieScreen(),
     );
   }
 }
