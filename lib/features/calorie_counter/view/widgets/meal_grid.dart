@@ -6,7 +6,7 @@ class MealGrid extends StatelessWidget {
 
   const MealGrid({
     super.key,
-    this.itemCount = 6, // временно
+    this.itemCount = 8, // временно
   });
 
   @override

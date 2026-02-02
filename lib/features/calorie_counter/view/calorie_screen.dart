@@ -7,35 +7,56 @@ class CalorieScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Счётчик калорий"), centerTitle: true),
-
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Заголовок общей суммы калорий
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              "Общее количество калорий: 0",
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-          ),
-
-          // GridView с блюдами
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: const MealGrid(),
-            ),
-          ),
-        ],
+      appBar: AppBar(
+        title: const Text("Счётчик калорий"),
+        centerTitle: true,
       ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Пока пусто — логика будет подключена позже
-        },
-        child: const Icon(Icons.add),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: MealGrid(),
+        ),
+      ),
+
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        color: Colors.grey.shade100,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Текст с калориями
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  "Общее количество калорий:",
+                  style: TextStyle(fontSize: 14),
+                ),
+                Text(
+                  "0", // !!! заменить на BlocBuilder !!!
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ],
+            ),
+
+            // Кнопка "Добавить"
+            ElevatedButton.icon(
+              onPressed: () {
+                // !!! логика !!!
+              },
+              icon: const Icon(Icons.add),
+              label: const Text("Добавить"),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
