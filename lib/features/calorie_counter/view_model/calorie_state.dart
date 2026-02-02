@@ -1,4 +1,4 @@
-import '../../models/meal.dart';
+import 'package:calorie_counter/features/calorie_counter/models/meal.dart';
 
 class CalorieState {
   final List<Meal> meals;
