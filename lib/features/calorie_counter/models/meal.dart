@@ -1,18 +1,11 @@
+import 'app_image.dart';
+
 class Meal {
-  final int id;
-  final String name;
+  final AppImageModel? image; 
   final int calories;
-  final String imagePath;
 
   Meal({
-    required this.id,
-    required this.name,
+    this.image,
     required this.calories,
-    required this.imagePath,
   });
-
-  @override
-  String toString() {
-    return 'Meal(id: $id, name: $name, calories: $calories)';
-  }
 }

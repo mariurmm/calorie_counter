@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'features/calorie_counter/ui/calorie_screen.dart';
+import 'features/calorie_counter/presentation/ui/calorie_screen.dart';
 
 void main() {
   runApp(const MyApp());

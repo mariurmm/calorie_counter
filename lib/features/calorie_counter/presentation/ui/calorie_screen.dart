@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/meal.dart';
-import '../view_model/calorie_bloc.dart';
-import '../view_model/calorie_event.dart';
-import '../view_model/calorie_state.dart';
+import '../../models/meal.dart';
+import '../bloc/calorie_bloc.dart';
+import '../bloc/calorie_event.dart';
+import '../bloc/calorie_state.dart';
 import 'widgets/meal_grid.dart';
 
 class CalorieScreen extends StatelessWidget {
@@ -60,8 +60,7 @@ class CalorieScreen extends StatelessWidget {
                   context.read<CalorieBloc>().add(
                     AddMeal(
                       Meal(
-                        id: DateTime.now().millisecondsSinceEpoch,
-                        name: 'Meal',
+                        imagePath: null, // пока заглушка
                         calories: 100,
                         imagePath: 'assets/placeholder.png',
                       ),
