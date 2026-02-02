@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../models/meal.dart';
+import '../view_model/calorie_bloc.dart';
+import '../view_model/calorie_event.dart';
+import '../view_model/calorie_state.dart';
 import 'widgets/meal_grid.dart';
 
 class CalorieScreen extends StatelessWidget {
@@ -6,56 +12,75 @@ class CalorieScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Счётчик калорий"),
-        centerTitle: true,
-      ),
-
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: MealGrid(),
+    return BlocProvider(
+      create: (_) => CalorieBloc(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Счётчик калорий"),
+          centerTitle: true,
         ),
-      ),
 
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        color: Colors.grey.shade100,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Текст с калориями
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  "Общее количество калорий:",
-                  style: TextStyle(fontSize: 14),
-                ),
-                Text(
-                  "0", // !!! заменить на BlocBuilder !!!
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              ],
-            ),
+        body: const SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: MealGrid(),
+          ),
+        ),
 
-            // Кнопка "Добавить"
-            ElevatedButton.icon(
-              onPressed: () {
-                // !!! логика !!!
-              },
-              icon: const Icon(Icons.add),
-              label: const Text("Добавить"),
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+        bottomNavigationBar: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          color: Colors.grey.shade100,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    "Общее количество калорий:",
+                    style: TextStyle(fontSize: 14),
+                  ),
+
+                  BlocBuilder<CalorieBloc, CalorieState>(
+                    builder: (context, state) {
+                      final totalCalories = state.meals.fold(
+                        0,
+                        (sum, meal) => sum + meal.calories,
+                      );
+
+                      return Text(
+                        "$totalCalories",
+                        style: Theme.of(context).textTheme.titleLarge,
+                      );
+                    },
+                  ),
+                ],
+              ),
+
+              ElevatedButton.icon(
+                onPressed: () {
+                  context.read<CalorieBloc>().add(
+                        AddMeal(
+                          Meal(
+                            imagePath: null, // пока заглушка
+                            calories: 100,
+                          ),
+                        ),
+                      );
+                },
+                icon: const Icon(Icons.add),
+                label: const Text("Добавить"),
+                style: ElevatedButton.styleFrom(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
